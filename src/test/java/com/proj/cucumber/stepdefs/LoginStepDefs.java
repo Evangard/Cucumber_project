@@ -1,9 +1,9 @@
 package com.proj.cucumber.stepdefs;
 
 import com.proj.cucumber.page.CustomerPage;
-import com.proj.cucumber.page.HomePage;
 import com.proj.cucumber.page.LoginPage;
-import com.proj.framework.driver.WebDriverRunner;
+import com.proj.framework.config.TestConfig;
+import com.proj.model.Customer;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,15 +15,17 @@ import static com.proj.framework.driver.WebDriverRunner.getDriver;
 public class LoginStepDefs {
     private LoginPage loginPage = new LoginPage(getDriver());
     private CustomerPage customerPage = new CustomerPage(getDriver());
+    private Customer customer = new Customer(TestConfig.CONFIG.userEmail(), TestConfig.CONFIG.userPassword());
+
     @Given("User goes to login page")
     public void navigateToLoginPage() {
         loginPage.openPage();
     }
 
-    @When("User enters email {string} and password {string}")
-    public void enterEmailAndPassword(String email, String password) {
-        loginPage.setEmail(email);
-        loginPage.setPassword(password);
+    @When("User enters credentials")
+    public void enterEmailAndPassword() {
+        loginPage.setEmail(customer.getEmail());
+        loginPage.setPassword(customer.getPassword());
     }
 
     @And("User clicks on login button")

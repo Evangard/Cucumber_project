@@ -20,9 +20,9 @@ public abstract class GenericPage extends AbstractPage {
     }
 
     @Step("Click on '{0}' tab.")
-    public void openTab(Tabs tab) {
+    public void openTab(String tab) {
         getDriver().findElement(By.xpath(
-                String.format("//div[@id='desktop-nav']//a[normalize-space()='%s']", tab.getName()))).click();
+                String.format("//div[@id='desktop-nav']//a[normalize-space()='%s']", tab))).click();
     }
 
     @Step("Select '{0}' category")
@@ -32,14 +32,23 @@ public abstract class GenericPage extends AbstractPage {
         webElementUtils().clickJS(getDriver().findElement(By.xpath(locator)));
     }
 
-    @Step("Add item to the cart.")
-    public void addFirstItemToCart() {
-        String locator = "//div[starts-with(@class, 'item product')][2]//button[@title='Add to Cart']";
+    @Step("Add '{0}' item to the cart.")
+    public void addItemToCart(String itemName) {
+        String locator = String.format("(//div[@class='product-item-link' and contains(text(), \"%s\")]/ancestor::" +
+                "div[starts-with(@class, 'item product')]//button[@title='Add to Cart'])[1]", itemName);
         waitUntil(() -> getDriver().findElement(By.xpath(locator)).isDisplayed());
         WebElement addToCartButton = getDriver().findElement(By.xpath(locator));
         webElementUtils().scrollIntoElement(addToCartButton);
         waitForSeconds(1);
         webElementUtils().clickJS(addToCartButton);
+    }
+
+    @Step
+    public void clickOnToOrderButton() {
+        String locator = "//div[@id='cart-drawer-dialog']//a[normalize-space()='Naar bestellen']";
+        tryWaitUntil(() -> getDriver().findElement(By.xpath(locator)).isDisplayed());
+        WebElement toOrderButton = getDriver().findElement(By.xpath(locator));
+        webElementUtils().clickJS(toOrderButton);
     }
 
     public void waitUntilLoadingSpinnerAppear() {

@@ -4,13 +4,10 @@ import com.proj.framework.WaitUtil;
 import com.proj.framework.config.TestConfig;
 import com.proj.framework.tools.AdditionalConditions;
 import com.proj.framework.tools.WebElementUtils;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import java.util.function.Supplier;
-
-import static com.proj.framework.driver.WebDriverRunner.getDriver;
 
 public abstract class AbstractPage {
     protected final String BASE_PAGE = TestConfig.CONFIG.baseUrl();
