@@ -22,10 +22,10 @@ public class LoginStepDefs {
         loginPage.openPage();
     }
 
-    @When("User enters credentials")
-    public void enterEmailAndPassword() {
-        loginPage.setEmail(customer.getEmail());
-        loginPage.setPassword(customer.getPassword());
+    @When("User enters {string} email and {string} password")
+    public void enterEmailAndPassword(String email, String pass) {
+        loginPage.setEmail(email);
+        loginPage.setPassword(pass);
     }
 
     @And("User clicks on login button")
